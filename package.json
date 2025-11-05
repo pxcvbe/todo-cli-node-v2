@@ -1,0 +1,37 @@
+{
+  "name": "todo-cli-node-v2",
+  "version": "2.0.0",
+  "main": "index.js",
+  "type": "module",
+  "bin": {
+    "todo": "./index.js"
+  },
+  "scripts": {
+    "start": "node index.js",
+    "test": "vitest",
+    "test:coverage": "vitest --coverage",
+    "test:ui": "vitest --ui"
+  },
+  "keywords": [
+    "cli",
+    "todo",
+    "task",
+    "productivity",
+    "task-manager"
+  ],
+  "author": "Ivan K",
+  "license": "ISC",
+  "description": "Simple and powerful CLI Todo List manager with modern features",
+  "dependencies": {
+    "chalk": "5.6.2",
+    "commander": "14.0.2",
+    "ora": "9.0.0"
+  },
+  "devDependencies": {
+    "@vitest/ui":"4.0.7",
+    "vitest": "4.0.7"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
