@@ -3,6 +3,7 @@ import chalk from "chalk";
 import { addCommand } from './commands/add.js';
 import { listCommand } from './commands/list.js';
 import { updateCommand } from "./commands/update.js";
+import { deleteCommand } from "./commands/delete.js";
 
 const program = new Command();
 
@@ -31,6 +32,16 @@ program
         listCommand(options);
     });
 
+// Delete command
+program
+    .command('delete <id>')
+    .alias('remove')
+    .alias('rm')
+    .description('Delete a task by ID')
+    .action((id) => {
+        deleteCommand(id);
+    });
+
 // Update command
 program
     .command('update <id> <description...>')
@@ -49,6 +60,7 @@ ${chalk.bold('\nExample:')}
     ${chalk.gray('$')} todo list --completed
     ${chalk.gray('$')} todo list --priority high
     ${chalk.gray('$')} todo update 1234567890 "Buy groceries at Alfamidi"
+    ${chalk.gray('$')} todo delete 1234567890
 `);
 
 export function createCLI() {

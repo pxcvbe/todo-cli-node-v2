@@ -59,6 +59,21 @@ class TodoService {
 
         return { old: oldTodo, updated: todos[todoIndex] };
     }
+
+    delete(id) {
+        const todos = this.getAll();
+        const todoIndex = todos.findIndex(t => t.id === id);
+
+        if (todoIndex === -1) {
+            throw new Error(`Task with ID ${id} not found`);
+        }
+
+        const deletedTodo = todos[todoIndex];
+        todos.splice(todoIndex, 1);
+        this.storage.write(todos);
+
+        return deletedTodo;
+    }
 }
 
 export default new TodoService(storageService);
