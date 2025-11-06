@@ -38,6 +38,26 @@ class TodoService {
         this.storage.write(todos);
 
         return newTodo;
+    }    
+
+    update(id, updates) {
+        const todos = this.getAll();
+        const todoIndex = todos.findIndex(t => t.id === id);
+
+        if (todoIndex === -1) {
+            throw new Error (`Task with ID ${id} not found`);
+        }
+
+        const oldTodo = { ...todos[todoIndex] };
+        todos[todoIndex] = {
+            ...todos[todoIndex],
+            ...updates,
+            updatedAt: new Date().toISOString()
+        };
+
+        this.storage.write(todos);
+
+        return { old: oldTodo, updated: todos[todoIndex] };
     }
 }
 
