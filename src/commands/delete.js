@@ -13,7 +13,7 @@ export async function deleteCommand(taskId) {
         const deletedTask = todoService.delete(id);
 
         spinner.succeed(chalk.green('Task deleted successfully!'));
-        console.log(chalk.gray('    ') + `${EMOJI.TRASH} Deleted: ${chalk.strikethrough(deletedTask.description)}`);
+        console.log(`${EMOJI.TRASH} Deleted: ${chalk.strikethrough(deletedTask.description)}`);
         formatter.emptyLine();
 
     } catch (error) {
@@ -21,8 +21,8 @@ export async function deleteCommand(taskId) {
         
         if (error instanceof ValidationError) {
             formatter.error(error.message);
-            console.log(chalk.gray('    Usage: todo delete <id>'));
-            console.log(chalk.gray('    Tip: Use "todo list" to see all task IDs'));
+            console.log(chalk.gray('Usage: todo delete <id>'));
+            console.log(chalk.gray('Tip: Use "todo list" to see all task IDs'));
         } else {
             formatter.error(error.message);
         }
