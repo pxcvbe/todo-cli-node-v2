@@ -15,14 +15,14 @@ export async function updateCommand(taskId, newDescription) {
         const { old, updated } = todoService.update(id, { description });
 
         spinner.succeed(chalk.green('Task updated successfully!'));
-        console.log(chalk.gray('    ') + chalk.cyan('Old:') + ` ${chalk.strikethrough(old.description)}`);
-        console.log(chalk.gray('    ') + chalk.cyan('New:') + ` ${chalk.bold(updated.description)}`);
+        console.log(chalk.cyan('Old:') + ` ${chalk.strikethrough(old.description)}`);
+        console.log(chalk.cyan('New:') + ` ${chalk.bold(updated.description)}`);
     } catch (error) {
         spinner.fail(chalk.red('Failed to update task'));
 
         if (error instanceof ValidationError) {
             formatter.error(error.message);
-            console.log(chalk.gray('   Usage: todo update <id> <new description>'));
+            console.log(chalk.gray('Usage: todo update <id> <new description>'));
         } else {
             formatter.error(error.message);
         }
