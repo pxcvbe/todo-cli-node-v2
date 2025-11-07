@@ -121,6 +121,16 @@ class TodoService {
 
         return todos;
     }
+
+    search(keyword) {
+        const todos = this.getAll();
+        const searchTerm = keyword.toLowerCase();
+
+        return todos.filter(t => 
+            t.description.toLowerCase().includes(searchTerm) ||
+            (t.tag && t.tag.toLowerCase().includes(searchTerm))
+        );
+    }
 }
 
 export default new TodoService(storageService);

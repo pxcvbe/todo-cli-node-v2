@@ -5,6 +5,7 @@ import { listCommand } from './commands/list.js';
 import { updateCommand } from "./commands/update.js";
 import { deleteCommand } from "./commands/delete.js";
 import { completeCommand, uncompleteCommand } from "./commands/complete.js";
+import { searchCommand } from "./commands/search.js";
 
 const program = new Command();
 
@@ -72,6 +73,15 @@ program
         updateCommand(id, description.join(' '));
     });
 
+// Search command
+program
+    .command('search <keyword...>')
+    .alias('find')
+    .description('Search tasks by keyword')
+    .action((keyword) => {
+        searchCommand(keyword.join(' '));
+    });
+
 // Custom help
 program.addHelpText('after', `
 ${chalk.bold('\nExample:')}
@@ -80,6 +90,7 @@ ${chalk.bold('\nExample:')}
     ${chalk.gray('$')} todo list
     ${chalk.gray('$')} todo list --completed
     ${chalk.gray('$')} todo list --priority high
+    ${chalk.gray('$')} todo search "bug"
     ${chalk.gray('$')} todo update 1234567890 "Buy groceries at Alfamidi"
     ${chalk.gray('$')} todo done   1234567890
     ${chalk.gray('$')} todo undone 1234567890
