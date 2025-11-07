@@ -131,6 +131,19 @@ class TodoService {
             (t.tag && t.tag.toLowerCase().includes(searchTerm))
         );
     }
+
+    clearCompleted() {
+        const todos = this.getAll();
+        const completedTasks = todos.filter(t => t.completed);
+        const remainingTasks = todos.filter(t =>  !t.completed);
+
+        this.storage.write(remainingTasks);
+
+        return {
+            cleared: completedTasks.length,
+            remaining: remainingTasks.length
+        };
+    }
 }
 
 export default new TodoService(storageService);

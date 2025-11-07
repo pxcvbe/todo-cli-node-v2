@@ -6,6 +6,7 @@ import { updateCommand } from "./commands/update.js";
 import { deleteCommand } from "./commands/delete.js";
 import { completeCommand, uncompleteCommand } from "./commands/complete.js";
 import { searchCommand } from "./commands/search.js";
+import { clearCommand } from "./commands/clear.js";
 
 const program = new Command();
 
@@ -82,6 +83,15 @@ program
         searchCommand(keyword.join(' '));
     });
 
+// Clear command
+program
+    .command('clear')
+    .alias('clean')
+    .description('Delete all completed tasks')
+    .action(() => {
+        clearCommand();
+    });
+
 // Custom help
 program.addHelpText('after', `
 ${chalk.bold('\nExample:')}
@@ -95,6 +105,7 @@ ${chalk.bold('\nExample:')}
     ${chalk.gray('$')} todo done   1234567890
     ${chalk.gray('$')} todo undone 1234567890
     ${chalk.gray('$')} todo delete 1234567890
+    ${chalk.gray('$')} todo clear
 `);
 
 export function createCLI() {
