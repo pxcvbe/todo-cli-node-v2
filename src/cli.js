@@ -4,6 +4,7 @@ import { addCommand } from './commands/add.js';
 import { listCommand } from './commands/list.js';
 import { updateCommand } from "./commands/update.js";
 import { deleteCommand } from "./commands/delete.js";
+import { completeCommand, uncompleteCommand } from "./commands/complete.js";
 
 const program = new Command();
 
@@ -42,6 +43,26 @@ program
         deleteCommand(id);
     });
 
+// Complete command
+program
+    .command('done <id>')
+    .alias('complete')
+    .alias('finish')
+    .description('Mark a task as complete')
+    .action((id) => {
+        completeCommand(id);
+    });
+
+// Uncomplete command
+program
+    .command('undone <id>')
+    .alias('uncomplete')
+    .alias('incomplete')
+    .description('Mark a task as incomplete')
+    .action((id) => {
+        uncompleteCommand(id);
+    });
+
 // Update command
 program
     .command('update <id> <description...>')
@@ -60,6 +81,8 @@ ${chalk.bold('\nExample:')}
     ${chalk.gray('$')} todo list --completed
     ${chalk.gray('$')} todo list --priority high
     ${chalk.gray('$')} todo update 1234567890 "Buy groceries at Alfamidi"
+    ${chalk.gray('$')} todo done   1234567890
+    ${chalk.gray('$')} todo undone 1234567890
     ${chalk.gray('$')} todo delete 1234567890
 `);
 

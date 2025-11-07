@@ -16,7 +16,7 @@ export async function addCommand(description) {
         // Create task
         const newTodo = todoService.create(parsed);
 
-        spinner.succeed(chalk.green('Task added successfully!'));
+        spinner.succeed(chalk.green(' Task added successfully!'));
 
         // Display task details
         console.log(chalk.cyan('ID:') + ` ${newTodo.id}`);
@@ -34,7 +34,7 @@ export async function addCommand(description) {
         formatter.emptyLine();
 
     } catch (error) {
-        spinner.fail(chalk.red('Failed to add task'));
+        spinner.fail(chalk.red(' Failed to add task'));
 
         if (error instanceof ValidationError) {
             formatter.error(error.message);
