@@ -74,6 +74,33 @@ class TodoService {
 
         return deletedTodo;
     }
+
+    complete(id) {
+        const todo = this.getById(id);
+
+        if (todo.completed) {
+            throw new Error('Task is already completed');
+        }
+
+        return this.update(id, {
+            completed: true,
+            completedAt: new Date().toISOString()
+        });
+    }
+
+    uncomplete(id) {
+        const todo = this.getById(id);
+
+        if (!todo.completed) {
+            throw new Error('Task is not completed yet');
+        }
+
+        const updated = this.update(id, { completed: false });
+        delete updated.updated.completedAt;
+        this.storage.write(this.getAll());
+
+        return updated;
+    }
 }
 
 export default new TodoService(storageService);

@@ -12,12 +12,12 @@ export async function deleteCommand(taskId) {
         const id = validator.validateId(taskId);
         const deletedTask = todoService.delete(id);
 
-        spinner.succeed(chalk.green('Task deleted successfully!'));
+        spinner.succeed(chalk.green(' Task deleted successfully!'));
         console.log(`${EMOJI.TRASH} Deleted: ${chalk.strikethrough(deletedTask.description)}`);
         formatter.emptyLine();
 
     } catch (error) {
-        spinner.fail(chalk.red('Failed to delete task'));
+        spinner.fail(chalk.red(' Failed to delete task'));
         
         if (error instanceof ValidationError) {
             formatter.error(error.message);
