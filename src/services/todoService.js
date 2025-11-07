@@ -24,11 +24,13 @@ class TodoService {
     create({ description, priority = PRIORITY.MEDIUM, dueDate = null, tag = null}) {
         const todos = this.getAll();
 
+        const normalizedPriority = priority || PRIORITY.MEDIUM;
+
         const newTodo = {
             id: Date.now(),
             description,
             completed: false,
-            priority,
+            priority: normalizedPriority,
             dueDate,
             tag,
             createdAt: new Date().toISOString()
@@ -142,6 +144,44 @@ class TodoService {
         return {
             cleared: completedTasks.length,
             remaining: remainingTasks.length
+        };
+    }
+
+    getStats() {
+        const todos = this.getAll();
+        const total = todos.length;
+        const completed = todos.filter(t => t.completed).length;
+        const pending = total - completed;
+        const percentage = total > 0 ? Math.round((completed / total) * 100) : 0;
+
+        let motivationalMessage = '';
+
+        switch (true) {
+            case (percentage === 100):
+                motivationalMessage = MESSAGES.MOTIVATIONAL.PERFECT;
+                break;
+            case (percentage >= 75):
+                motivationalMessage = MESSAGES.MOTIVATIONAL.GREAT;
+                break;
+            case (percentage >= 50):
+                motivationalMessage = MESSAGES.MOTIVATIONAL.HALFWAY;
+                break;
+            case (percentage >= 25):
+                motivationalMessage = MESSAGES.MOTIVATIONAL.GOOD;
+                break;
+            case (percentage > 0):
+                motivationalMessage = MESSAGES.MOTIVATIONAL.START;
+                break;
+            default:
+                motivationalMessage = MESSAGES.MOTIVATIONAL.BEGIN;
+        }
+
+        return {
+            total,
+            completed,
+            pending,
+            percentage,
+            motivationalMessage
         };
     }
 }

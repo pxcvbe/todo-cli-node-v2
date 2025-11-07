@@ -24,10 +24,12 @@ export const formatter = {
     },
 
     formatPriority(priority) {
-        const emoji = PRIORITY_EMOJI[priority] || PRIORITY_EMOJI[PRIORITY.MEDIUM];
-        const color = priority === PRIORITY.HIGH ? chalk.red :
-                      priority === PRIORITY.LOW ? chalk.green : chalk.yellow;
-        return `${emoji} ${color(priority.toUpperCase())}`;
+        // Handle null/undefined by default to MEDIUM
+        const normalizedPriority = priority || PRIORITY.MEDIUM;
+        const emoji = PRIORITY_EMOJI[normalizedPriority] || PRIORITY_EMOJI[PRIORITY.MEDIUM];
+        const color = normalizedPriority === PRIORITY.HIGH ? chalk.red :
+                      normalizedPriority === PRIORITY.LOW ? chalk.green : chalk.yellow;
+        return `${emoji} ${color(normalizedPriority.toUpperCase())}`;
     },
 
     formatTask(todo, index = null) {
@@ -100,10 +102,10 @@ export const formatter = {
     formatStats(stats) {
         console.log(chalk.bold.cyan('\n📊 Task Statistics\n'));
         console.log(chalk.gray('┌' + '─'.repeat(26) + '┐'));
-        console.log(chalk.gray('│') + ` ${EMOJI.CLIPBOARD} Total Tasks:    ${chalk.bold(stats.total)}`.padEnd(27) + chalk.gray('│'));
-        console.log(chalk.gray('│') + ` ${EMOJI.SUCCESS} Completed:      ${chalk.green.bold(stats.completed)}`.padEnd(27 + 10) + chalk.gray('│'));
-        console.log(chalk.gray('│') + ` ⏳ Pending:        ${chalk.yellow.bold(stats.pending)}`.padEnd(27 + 10) + chalk.gray('│'));
-        console.log(chalk.gray('│') + ` 📈 Progress:       ${chalk.cyan.bold(stats.percentage + '%')}`.padEnd(27 + 10) + chalk.gray('│'));
+        console.log(chalk.gray('│') + ` ${EMOJI.CLIPBOARD} Total Tasks:    ${chalk.bold(stats.total)}`.padEnd(27) + chalk.gray('     │'));
+        console.log(chalk.gray('│') + ` ${EMOJI.SUCCESS} Completed:      ${chalk.green.bold(stats.completed)}`.padEnd(27 + 10) + chalk.gray('     │'));
+        console.log(chalk.gray('│') + ` ⏳ Pending:        ${chalk.yellow.bold(stats.pending)}`.padEnd(27 + 10) + chalk.gray('     │'));
+        console.log(chalk.gray('│') + ` 📈 Progress:       ${chalk.cyan.bold(stats.percentage + '%')}`.padEnd(27 + 10) + chalk.gray('    │'));
         console.log(chalk.gray('└' + '─'.repeat(26) + '┘'));
 
         console.log(`\n${this.formatProgressBar(stats.percentage)}\n`)

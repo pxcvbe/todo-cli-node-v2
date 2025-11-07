@@ -7,6 +7,7 @@ import { deleteCommand } from "./commands/delete.js";
 import { completeCommand, uncompleteCommand } from "./commands/complete.js";
 import { searchCommand } from "./commands/search.js";
 import { clearCommand } from "./commands/clear.js";
+import { statsCommand } from "./commands/stats.js";
 
 const program = new Command();
 
@@ -19,8 +20,11 @@ program
 program
     .command('add <description...>')
     .description('Add a new task')
-    .action((description) => {
-        addCommand(description.join(' '));
+    .option('-p, --priority <level>', 'Set task priority (high, medium, low)')
+    .option('-d, --due <date>', 'Set due date (YYYY-MM-DD)')
+    .option('-t --tag <name>', 'Set task tag')
+    .action((description, options) => {
+        addCommand(description.join(' '), options);
     });
 
 // List command
@@ -83,6 +87,16 @@ program
         searchCommand(keyword.join(' '));
     });
 
+// Stats command
+program
+    .command('stats')
+    .alias('statistics')
+    .alias('status')
+    .description('Show task statistics')
+    .action(() => {
+        statsCommand();
+    });
+
 // Clear command
 program
     .command('clear')
@@ -100,6 +114,7 @@ ${chalk.bold('\nExample:')}
     ${chalk.gray('$')} todo list
     ${chalk.gray('$')} todo list --completed
     ${chalk.gray('$')} todo list --priority high
+    ${chalk.gray('$')} todo stats
     ${chalk.gray('$')} todo search "bug"
     ${chalk.gray('$')} todo update 1234567890 "Buy groceries at Alfamidi"
     ${chalk.gray('$')} todo done   1234567890

@@ -3,15 +3,39 @@ import ora from "ora";
 import todoService from "../services/todoService.js";
 import { parser } from "../utils/parser.js";
 import { formatter } from "../utils/formatter.js";
-import { ValidationError } from "../utils/validator.js";
+import { ValidationError, validator } from "../utils/validator.js";
 import { EMOJI } from "../config/constants.js";
 
-export async function addCommand(description) {
+export async function addCommand(description, options = {}) {
     const spinner = ora('Adding task...').start();
 
     try {
-        // Parse input dengan flags
-        const parsed = parser.parseTaskInput(description);
+        // Parse input - use options from Commander.js if available, otherwise parse from description
+        let parsed;
+        if (options.priority || options.due || options.tag) {
+            // Use Commander.js options
+            parsed = {
+                description: description.trim(),
+                priority: options.priority || null,
+                dueDate: options.due || null,
+                tag: options.tag || null
+            };
+
+            // Validate inputs
+            parsed.description = validator.validateDescription(parsed.description);
+            if (parsed.priority) {
+                parsed.priority = validator.validatePriority(parsed.priority);
+            }
+            if (parsed.dueDate) {
+                parsed.dueDate = validator.validateDate(parsed.dueDate);
+            }
+            if (parsed.tag) {
+                parsed.tag = validator.validateTag(parsed.tag);
+            }
+        } else {
+            // Fallback to regex parsing for backward compability
+            parsed = parser.parseTaskInput(description);
+        }
 
         // Create task
         const newTodo = todoService.create(parsed);
