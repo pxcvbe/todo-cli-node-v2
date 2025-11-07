@@ -38,7 +38,7 @@ class TodoService {
         this.storage.write(todos);
 
         return newTodo;
-    }    
+    }
 
     update(id, updates) {
         const todos = this.getAll();
@@ -100,6 +100,26 @@ class TodoService {
         this.storage.write(this.getAll());
 
         return updated;
+    }
+
+    filter({ completed = null, pending = null, priority = null, tag = null}) {
+        let todos = this.getAll();
+
+        if (completed === true) {
+            todos = todos.filter(t => t.completed);
+        } else if (pending === true) {
+            todos = todos.filter(t => !t.completed);
+        }
+
+        if (priority) {
+            todos = todos.filter(t => t.priority === priority);
+        }
+
+        if (tag) {
+            todos = todos.filter(t => t.tag === tag);
+        }
+
+        return todos;
     }
 }
 
