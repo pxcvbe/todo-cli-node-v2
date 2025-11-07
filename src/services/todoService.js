@@ -184,6 +184,26 @@ class TodoService {
             motivationalMessage
         };
     }
+
+    export() {
+        return this.getAll();
+    }
+
+    import(tasks) {
+        if (!Array.isArray(tasks)) {
+            throw new Error('Invalid import data. Expected an array of tasks');
+        }
+
+        const currentTodos = this.getAll();
+        const mergedTodos = [...currentTodos, ...tasks];
+
+        this.storage.write(mergedTodos);
+
+        return {
+            imported: tasks.length,
+            total: mergedTodos.length
+        }
+    }
 }
 
 export default new TodoService(storageService);

@@ -8,6 +8,8 @@ import { completeCommand, uncompleteCommand } from "./commands/complete.js";
 import { searchCommand } from "./commands/search.js";
 import { clearCommand } from "./commands/clear.js";
 import { statsCommand } from "./commands/stats.js";
+import { exportCommand } from "./commands/export.js";
+import { importCommand } from "./commands/import.js";
 
 const program = new Command();
 
@@ -106,6 +108,22 @@ program
         clearCommand();
     });
 
+// Export command
+program
+    .command('export')
+    .description('Export tasks to JSON file')
+    .action(() => {
+        exportCommand();
+    });
+
+// Import command
+program
+    .command('import <filename>')
+    .description('Import tasks from JSON file')
+    .action((filename) => {
+        importCommand(filename);
+    });
+
 // Custom help
 program.addHelpText('after', `
 ${chalk.bold('\nExample:')}
@@ -121,6 +139,14 @@ ${chalk.bold('\nExample:')}
     ${chalk.gray('$')} todo undone 1234567890
     ${chalk.gray('$')} todo delete 1234567890
     ${chalk.gray('$')} todo clear
+    ${chalk.gray('$')} todo export
+    ${chalk.gray('$')} todo import todos-export-2025-11-07.json
+
+${chalk.bold('\nVisual Indicators:')}
+    Priority: ${chalk.red('🔴')} High | ${chalk.yellow('🟡')} Medium | ${chalk.green('🟢')} Low
+    Status: ${chalk.cyan('✓')} Completed | ${chalk.gray('○')} Pending
+    Due Date: ${chalk.blue('📅')} Normal | ${chalk.red('⚠️')} Overdue
+    Tag: ${chalk.magenta('🏷️')} Category label
 `);
 
 export function createCLI() {
