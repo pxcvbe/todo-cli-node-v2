@@ -291,7 +291,7 @@ Tasks are stored in `todos.json` in the project root directory. You can backup t
 [
   {
     "id": 1730448000000,
-    "description": "Buy groceries",
+    "description": "Buy groceries at Super Indo",
     "completed": false,
     "priority": "medium",
     "dueDate": "2025-11-10",
