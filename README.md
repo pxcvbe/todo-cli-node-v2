@@ -2,7 +2,7 @@
 
 A **modern, feature-rich** command-line todo list manager built with ``Node.js``. Stay organized with **priorities**, **due dates**, **tags**, **search**, and ``more!``
 
-[![Typing SVG](https://readme-typing-svg.herokuapp.com?font=Jetbrains+Mono&size=14&pause=1000&color=0DBBAD&width=900&lines=Created+By%3A+Ivan.K+%7C+Refactored+v2.0)](https://git.io/typing-svg)
+[![Typing SVG](https://readme-typing-svg.herokuapp.com?font=Jetbrains+Mono&size=14&pause=1000&color=0DBBAD&width=900&lines=Created+By%3A+Ivan.K+%7C+Version+v2.0)](https://git.io/typing-svg)
 
 ---
 
