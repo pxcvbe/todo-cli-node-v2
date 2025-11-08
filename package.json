@@ -28,7 +28,8 @@
     "ora": "9.0.0"
   },
   "devDependencies": {
-    "@vitest/ui":"4.0.7",
+    "@vitest/coverage-v8": "^4.0.7",
+    "@vitest/ui": "4.0.7",
     "vitest": "4.0.7"
   },
   "engines": {
