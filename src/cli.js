@@ -15,7 +15,7 @@ const program = new Command();
 
 program
     .name('todos')
-    .description(chalk.cyan('Simple and powerful CLI Todo List List manager'))
+    .description(chalk.cyan('[-] Simple and powerful CLI Todo List manager'))
     .version('2.0.0');
 
 // Add command
