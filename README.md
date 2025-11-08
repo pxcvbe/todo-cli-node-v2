@@ -19,6 +19,10 @@ A **modern, feature-rich** command-line todo list manager built with ``Node.js``
 
 ---
 
+### The Program Looks Like
+<img width="865" height="552" alt="image" src="https://github.com/user-attachments/assets/478bacec-e72c-453d-8a59-72520e48955d" />
+
+
 ## ⬇️ Installation
 
 ```bash
@@ -269,6 +273,8 @@ npm run test:ui
 - ✅ Filter & search functionality
 - ✅ Statistics calculation
 - ✅ Import/Export operations
+
+<img width="741" height="586" alt="Screenshot 2025-11-08 163703" src="https://github.com/user-attachments/assets/33e47bbc-aa30-4cc5-85b9-6b808aa3f680" />
 
 ---
 
