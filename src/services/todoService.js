@@ -206,4 +206,6 @@ class TodoService {
     }
 }
 
+export { TodoService };
+
 export default new TodoService(storageService);
