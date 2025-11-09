@@ -16,6 +16,7 @@ A **modern, feature-rich** command-line todo list manager built with ``Node.js``
 - 📦 **Modern Libraries** - Commander.js for argument parsing
 - 🛡️ **Robust Validation** - Better error handling
 - 🎯 **Type Safety** - Improved code quality
+- 📝 **JSDoc Documentation** - Add ``JSDoc`` for better information
 
 ---
 
