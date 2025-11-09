@@ -26,7 +26,7 @@ export function listCommand(options = {}) {
             let filterLabel = '';
             if (completed) filterLabel = 'completed';
             else if (pending) filterLabel = 'pending';
-            else if (priority) filterLabel `with priority ${priority}`;
+            else if (priority) filterLabel = `with priority ${priority}`;
             else if (tag) filterLabel = `with tag ${tag}`;
 
             formatter.info(`No ${filterLabel} tasks found!`);

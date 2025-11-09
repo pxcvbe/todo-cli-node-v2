@@ -19,7 +19,7 @@ export async function importCommand(filename) {
         const importPath = path.join(__dirname, '../../', validFilename);
 
         if (!storageService.fileExists(importPath)) {
-            throw new Error(`File "${validFilename} not found!\n  Make sure the file is in the project directory."`);
+            throw new Error(`File "${validFilename}" not found!\n  Make sure the file is in the project directory.`);
         }
 
         const importedTodos = storageService.readFile(importPath);
