@@ -66,7 +66,7 @@ export const formatter = {
         console.log(`${chalk.cyan('ID:')}          ${todo.id}`);
         console.log(`${chalk.cyan('Description:')} ${todo.description}`);
         console.log(`${chalk.cyan('Status:')}      ${todo.completed ? chalk.green('✓ Completed') : chalk.yellow('○ Pending')}`);
-        console.log(`${chalk.cyan('Priority:')}    ${this.formarPriority(todo.priority || PRIORITY.MEDIUM)}`);
+        console.log(`${chalk.cyan('Priority:')}    ${this.formatPriority(todo.priority || PRIORITY.MEDIUM)}`);
 
         if (todo.dueDate) {
             const isOverdue = parser.isOverdue(todo.dueDate, todo.completed);
@@ -82,7 +82,7 @@ export const formatter = {
         }
 
         if (todo.completedAt) {
-            console.log(`${chalk.cyan('Completed:')}    ${chalk.gray(new Date(todo.createdAt).toDateString())}`);
+            console.log(`${chalk.cyan('Completed:')}    ${chalk.gray(new Date(todo.completedAt).toDateString())}`);
         }
 
         console.log(chalk.gray('-'.repeat(50)));
