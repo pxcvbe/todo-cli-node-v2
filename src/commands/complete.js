@@ -1,3 +1,9 @@
+/**
+ * @fileoverview Command handlers for marking tasks as complete or incomplete.
+ * @module commands/complete
+ * @description Handles the 'done' and 'undone' commands to toggle task completion status.
+ */
+
 import chalk from 'chalk';
 import ora from 'ora';
 import todoService from '../services/todoService.js';
@@ -5,6 +11,17 @@ import { validator, ValidationError } from '../utils/validator.js';
 import { formatter } from '../utils/formatter.js';
 import { EMOJI } from '../config/constants.js';
 
+/**
+ * Marks a task as completed.
+ * @async
+ * @function completeCommand
+ * @param {string|number} taskId - The ID of the task to mark as complete.
+ * @returns {Promise<void>}
+ * @throws {ValidationError} If validation fails.
+ * @throws {Error} If the task is not found or already completed.
+ * @example
+ * completeCommand(1234567890);
+ */
 export async function completeCommand(taskId) {
     const spinner = ora('Marking task as complete...').start();
 
@@ -34,6 +51,17 @@ export async function completeCommand(taskId) {
     }
 }
 
+/**
+ * Marks a task as incomplete.
+ * @async
+ * @function uncompleteCommand
+ * @param {string|number} taskId - The ID of the task to mark as incomplete.
+ * @returns {Promise<void>}
+ * @throws {ValidationError} If validation fails.
+ * @throws {Error} If the task is not found or not completed.
+ * @example
+ * uncompleteCommand(1234567890);
+ */
 export async function uncompleteCommand(taskId) {
     const spinner = ora('Marking task as incomplete...').start();
 
