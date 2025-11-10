@@ -1,3 +1,9 @@
+/**
+ * @fileoverview CLI setup and command registration for the Todo application.
+ * @module cli
+ * @description Configures all CLI commands, options, and help text using Commander.js.
+ */
+
 import { Command } from "commander";
 import chalk from "chalk";
 import { addCommand } from './commands/add.js';
@@ -11,6 +17,10 @@ import { statsCommand } from "./commands/stats.js";
 import { exportCommand } from "./commands/export.js";
 import { importCommand } from "./commands/import.js";
 
+/**
+ * Commander.js program instance for the Todo CLI.
+ * @type {Command}
+ */
 const program = new Command();
 
 program
@@ -149,6 +159,15 @@ ${chalk.bold('\nVisual Indicators:')}
     Tag: ${chalk.magenta('🏷️')} Category label
 `);
 
+/**
+ * Creates and configures the CLI program with all commands and options.
+ * @function createCLI
+ * @returns {Command} The configured Commander.js program instance.
+ * @description Sets up the main CLI program with name, description, version, and all subcommands.
+ * @example
+ * const program = createCLI();
+ * program.parse(process.argv);
+ */
 export function createCLI() {
     return program;
 }

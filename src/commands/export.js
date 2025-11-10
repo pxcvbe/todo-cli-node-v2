@@ -1,3 +1,9 @@
+/**
+ * @fileoverview Command handler for exporting tasks to a JSON file.
+ * @module commands/export
+ * @description Handles the 'export' command to save all tasks to a JSON file.
+ */
+
 import path from 'path';
 import chalk from 'chalk';
 import ora from 'ora';
@@ -10,6 +16,15 @@ import { EMOJI } from '../config/constants.js';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+/**
+ * Exports all tasks to a JSON file with a timestamp in the filename.
+ * @async
+ * @function exportCommand
+ * @returns {Promise<void>}
+ * @throws {Error} If the export operation fails.
+ * @example
+ * exportCommand(); // Exports to todos-export-2025-11-07.json
+ */
 export async function exportCommand() {
     const spinner = ora('Exporting tasks...').start();
 

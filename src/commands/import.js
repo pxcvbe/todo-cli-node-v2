@@ -1,3 +1,9 @@
+/**
+ * @fileoverview Command handler for importing tasks from a JSON file.
+ * @module commands/import
+ * @description Handles the 'import' command to load tasks from a JSON file and merge with existing tasks.
+ */
+
 import path from 'path';
 import chalk from 'chalk';
 import ora from 'ora';
@@ -11,6 +17,17 @@ import { EMOJI } from '../config/constants.js';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+/**
+ * Imports tasks from a JSON file and merges them with existing tasks.
+ * @async
+ * @function importCommand
+ * @param {string} filename - The name of the JSON file to import from.
+ * @returns {Promise<void>}
+ * @throws {ValidationError} If validation fails.
+ * @throws {Error} If the file is not found or import fails.
+ * @example
+ * importCommand("todos-export-2025-11-07.json");
+ */
 export async function importCommand(filename) {
     const spinner = ora('Importing tasks...').start();
 

@@ -1,7 +1,20 @@
+/**
+ * @fileoverview Command handler for displaying task statistics.
+ * @module commands/stats
+ * @description Handles the 'stats' command to show task statistics and progress.
+ */
+
 import chalk from 'chalk';
 import todoService from '../services/todoService.js';
 import { formatter } from '../utils/formatter.js';
 
+/**
+ * Displays task statistics including total, completed, pending tasks, and progress.
+ * @function statsCommand
+ * @returns {void}
+ * @example
+ * statsCommand();
+ */
 export function statsCommand() {
     try {
         const stats = todoService.getStats();

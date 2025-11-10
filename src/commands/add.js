@@ -1,3 +1,9 @@
+/**
+ * @fileoverview Command handler for adding new tasks.
+ * @module commands/add
+ * @description Handles the 'add' command to create new todos with optional priority, due date, and tag.
+ */
+
 import chalk from "chalk";
 import ora from "ora";
 import todoService from "../services/todoService.js";
@@ -6,6 +12,20 @@ import { formatter } from "../utils/formatter.js";
 import { ValidationError, validator } from "../utils/validator.js";
 import { EMOJI } from "../config/constants.js";
 
+/**
+ * Adds a new task to the todo list.
+ * @async
+ * @function addCommand
+ * @param {string} description - Task description (can include flags for backward compatibility).
+ * @param {Object} [options={}] - Command options from Commander.js.
+ * @param {string} [options.priority] - Priority level (high, medium, low).
+ * @param {string} [options.due] - Due date in YYYY-MM-DD format.
+ * @param {string} [options.tag] - Tag name for the task.
+ * @returns {Promise<void>}
+ * @throws {ValidationError} If validation fails.
+ * @example
+ * addCommand("Buy groceries", { priority: "high", due: "2025-12-31", tag: "shopping" });
+ */
 export async function addCommand(description, options = {}) {
     const spinner = ora('Adding task...').start();
 

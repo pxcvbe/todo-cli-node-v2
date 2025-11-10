@@ -1,15 +1,88 @@
+/**
+ * @fileoverview Service for managing todo operations and business logic.
+ * @module services/todoService
+ * @description Provides methods for CRUD operations, filtering, searching, and statistics for todos.
+ */
+
 import storageService from './storageService.js';
 import { PRIORITY, MESSAGES } from '../config/constants.js';
 
+/**
+ * @typedef {Object} Todo
+ * @property {number} id - Unique identifier for the todo.
+ * @property {string} description - Task description.
+ * @property {boolean} completed - Completion status.
+ * @property {string} priority - Priority level (high, medium, low).
+ * @property {string|null} dueDate - Due date in YYYY-MM-DD format.
+ * @property {string|null} tag - Tag associated with the task.
+ * @property {string} createdAt - ISO timestamp of creation.
+ * @property {string} [updatedAt] - ISO timestamp of last update.
+ * @property {string} [completedAt] - ISO timestamp of completion.
+ */
+
+/**
+ * @typedef {Object} TodoStats
+ * @property {number} total - Total number of tasks.
+ * @property {number} completed - Number of completed tasks.
+ * @property {number} pending - Number of pending tasks.
+ * @property {number} percentage - Completion percentage (0-100).
+ * @property {string} motivationalMessage - Motivational message based on progress.
+ */
+
+/**
+ * @typedef {Object} UpdateResult
+ * @property {Todo} old - The todo before update.
+ * @property {Todo} updated - The todo after update.
+ */
+
+/**
+ * @typedef {Object} ClearResult
+ * @property {number} cleared - Number of tasks cleared.
+ * @property {number} remaining - Number of tasks remaining.
+ */
+
+/**
+ * @typedef {Object} ImportResult
+ * @property {number} imported - Number of tasks imported.
+ * @property {number} total - Total number of tasks after import.
+ */
+
+/**
+ * Service class for managing todos.
+ * @class TodoService
+ * @description Handles all business logic for todo operations including CRUD, filtering, and statistics.
+ */
 class TodoService {
+    /**
+     * Creates a new TodoService instance.
+     * @param {StorageService} storage - Storage service instance for data persistence.
+     * @constructor
+     */
     constructor(storage) {
+        /**
+         * Storage service instance.
+         * @type {StorageService}
+         * @private
+         */
         this.storage = storage;
     }
 
+    /**
+     * Retrieves all todos from storage.
+     * @method getAll
+     * @returns {Array<Todo>} Array of all todo objects.
+     */
     getAll() {
         return this.storage.read();
     }
 
+    /**
+     * Retrieves a todo by its ID.
+     * @method getById
+     * @param {number} id - The ID of the todo to retrieve.
+     * @returns {Todo} The todo object with the specified ID.
+     * @throws {Error} If the todo with the specified ID is not found.
+     */
     getById(id) {
         const todos = this.getAll();
         const todo = todos.find(t => t.id === id);
@@ -21,6 +94,16 @@ class TodoService {
         return todo;
     }
 
+    /**
+     * Creates a new todo.
+     * @method create
+     * @param {Object} todoData - The todo data.
+     * @param {string} todoData.description - Task description.
+     * @param {string} [todoData.priority=PRIORITY.MEDIUM] - Priority level (high, medium, low).
+     * @param {string|null} [todoData.dueDate=null] - Due date in YYYY-MM-DD format.
+     * @param {string|null} [todoData.tag=null] - Tag associated with the task.
+     * @returns {Todo} The newly created todo object.
+     */
     create({ description, priority = PRIORITY.MEDIUM, dueDate = null, tag = null}) {
         const todos = this.getAll();
 
@@ -42,6 +125,14 @@ class TodoService {
         return newTodo;
     }
 
+    /**
+     * Updates an existing todo.
+     * @method update
+     * @param {number} id - The ID of the todo to update.
+     * @param {Object} updates - Object containing fields to update.
+     * @returns {UpdateResult} Object containing the old and updated todo.
+     * @throws {Error} If the todo with the specified ID is not found.
+     */
     update(id, updates) {
         const todos = this.getAll();
         const todoIndex = todos.findIndex(t => t.id === id);
@@ -62,6 +153,13 @@ class TodoService {
         return { old: oldTodo, updated: todos[todoIndex] };
     }
 
+    /**
+     * Deletes a todo by its ID.
+     * @method delete
+     * @param {number} id - The ID of the todo to delete.
+     * @returns {Todo} The deleted todo object.
+     * @throws {Error} If the todo with the specified ID is not found.
+     */
     delete(id) {
         const todos = this.getAll();
         const todoIndex = todos.findIndex(t => t.id === id);
@@ -77,6 +175,13 @@ class TodoService {
         return deletedTodo;
     }
 
+    /**
+     * Marks a todo as completed.
+     * @method complete
+     * @param {number} id - The ID of the todo to complete.
+     * @returns {UpdateResult} Object containing the old and updated todo.
+     * @throws {Error} If the todo is already completed or not found.
+     */
     complete(id) {
         const todo = this.getById(id);
 
@@ -90,6 +195,13 @@ class TodoService {
         });
     }
 
+    /**
+     * Marks a completed todo as incomplete.
+     * @method uncomplete
+     * @param {number} id - The ID of the todo to mark as incomplete.
+     * @returns {UpdateResult} Object containing the old and updated todo.
+     * @throws {Error} If the todo is not completed or not found.
+     */
     uncomplete(id) {
         const todo = this.getById(id);
 
@@ -104,6 +216,16 @@ class TodoService {
         return updated;
     }
 
+    /**
+     * Filters todos based on various criteria.
+     * @method filter
+     * @param {Object} filters - Filter criteria.
+     * @param {boolean|null} [filters.completed=null] - Filter by completed status (true for completed only).
+     * @param {boolean|null} [filters.pending=null] - Filter by pending status (true for pending only).
+     * @param {string|null} [filters.priority=null] - Filter by priority level.
+     * @param {string|null} [filters.tag=null] - Filter by tag.
+     * @returns {Array<Todo>} Array of filtered todo objects.
+     */
     filter({ completed = null, pending = null, priority = null, tag = null}) {
         let todos = this.getAll();
 
@@ -124,6 +246,12 @@ class TodoService {
         return todos;
     }
 
+    /**
+     * Searches todos by keyword in description or tag.
+     * @method search
+     * @param {string} keyword - Search keyword.
+     * @returns {Array<Todo>} Array of todos matching the keyword.
+     */
     search(keyword) {
         const todos = this.getAll();
         const searchTerm = keyword.toLowerCase();
@@ -134,6 +262,11 @@ class TodoService {
         );
     }
 
+    /**
+     * Removes all completed todos from storage.
+     * @method clearCompleted
+     * @returns {ClearResult} Object containing the number of cleared and remaining tasks.
+     */
     clearCompleted() {
         const todos = this.getAll();
         const completedTasks = todos.filter(t => t.completed);
@@ -147,6 +280,11 @@ class TodoService {
         };
     }
 
+    /**
+     * Gets statistics about todos.
+     * @method getStats
+     * @returns {TodoStats} Object containing todo statistics and motivational message.
+     */
     getStats() {
         const todos = this.getAll();
         const total = todos.length;
@@ -185,10 +323,22 @@ class TodoService {
         };
     }
 
+    /**
+     * Exports all todos.
+     * @method export
+     * @returns {Array<Todo>} Array of all todo objects.
+     */
     export() {
         return this.getAll();
     }
 
+    /**
+     * Imports todos from an array and merges with existing todos.
+     * @method import
+     * @param {Array<Todo>} tasks - Array of todo objects to import.
+     * @returns {ImportResult} Object containing the number of imported tasks and total tasks.
+     * @throws {Error} If the import data is not an array.
+     */
     import(tasks) {
         if (!Array.isArray(tasks)) {
             throw new Error('Invalid import data. Expected an array of tasks');
@@ -206,6 +356,15 @@ class TodoService {
     }
 }
 
+/**
+ * TodoService class export.
+ * @exports TodoService
+ */
 export { TodoService };
 
+/**
+ * Default TodoService instance with storage service.
+ * @type {TodoService}
+ * @exports todoService
+ */
 export default new TodoService(storageService);

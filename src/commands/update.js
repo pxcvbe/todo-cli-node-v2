@@ -1,3 +1,9 @@
+/**
+ * @fileoverview Command handler for updating tasks.
+ * @module commands/update
+ * @description Handles the 'update' command to modify task descriptions.
+ */
+
 import chalk from 'chalk';
 import ora from 'ora';
 import todoService from '../services/todoService.js';
@@ -5,6 +11,18 @@ import { validator, ValidationError } from '../utils/validator.js';
 import { formatter } from '../utils/formatter.js';
 import { EMOJI } from '../config/constants.js';
 
+/**
+ * Updates a task's description.
+ * @async
+ * @function updateCommand
+ * @param {string|number} taskId - The ID of the task to update.
+ * @param {string} newDescription - The new description for the task.
+ * @returns {Promise<void>}
+ * @throws {ValidationError} If validation fails.
+ * @throws {Error} If the task is not found.
+ * @example
+ * updateCommand(1234567890, "Updated task description");
+ */
 export async function updateCommand(taskId, newDescription) {
     const spinner = ora('Updating task...').start();
 

@@ -1,7 +1,26 @@
+/**
+ * @fileoverview Command handler for listing tasks.
+ * @module commands/list
+ * @description Handles the 'list' command to display todos with optional filtering.
+ */
+
 import chalk from "chalk";
 import todoService from "../services/todoService.js";
 import { formatter } from "../utils/formatter.js";
 
+/**
+ * Lists all tasks with optional filtering.
+ * @function listCommand
+ * @param {Object} [options={}] - Filter options.
+ * @param {boolean} [options.completed] - Show only completed tasks.
+ * @param {boolean} [options.pending] - Show only pending tasks.
+ * @param {string} [options.priority] - Filter by priority level (high, medium, low).
+ * @param {string} [options.tag] - Filter by tag name.
+ * @returns {void}
+ * @example
+ * listCommand({ completed: true }); // List only completed tasks
+ * listCommand({ priority: "high" }); // List only high priority tasks
+ */
 export function listCommand(options = {}) {
     try {
         const { completed, pending, priority, tag } = options;
