@@ -1,9 +1,23 @@
+/**
+ * @fileoverview Command handler for clearing completed tasks.
+ * @module commands/clear
+ * @description Handles the 'clear' command to remove all completed tasks from the list.
+ */
+
 import chalk from 'chalk';
 import ora from 'ora';
 import todoService from '../services/todoService.js';
 import { formatter } from '../utils/formatter.js';
 import { EMOJI } from '../config/constants.js';
 
+/**
+ * Removes all completed tasks from the todo list.
+ * @async
+ * @function clearCommand
+ * @returns {Promise<void>}
+ * @example
+ * clearCommand();
+ */
 export async function clearCommand() {
     const spinner = ora('Clearing completed tasks...').start();
 
