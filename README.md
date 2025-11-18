@@ -275,6 +275,8 @@ npm run test:ui
 - ✅ Statistics calculation
 - ✅ Import/Export operations
 
+<img width="1586" height="748" alt="image" src="https://github.com/user-attachments/assets/f46cfeca-4095-4776-9174-d412bdee5b33" />
+
 <img width="741" height="586" alt="Screenshot 2025-11-08 163703" src="https://github.com/user-attachments/assets/33e47bbc-aa30-4cc5-85b9-6b808aa3f680" />
 
 ---
